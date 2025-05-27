@@ -1,4 +1,5 @@
 import 'package:car_rental/services/api_service.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final wheelsProvider = FutureProvider<List<String>>((ref) async {
@@ -23,3 +24,13 @@ final vehicleModelsProvider =
       if (selectedType == null) throw Exception('Vehicle type not selected');
       return await ApiService.fetchVehicleModels(selectedType);
     });
+
+final selectedDateRangeProvider = StateProvider<DateTimeRange?>((ref) => null);
+
+final unavailableDatesProvider = FutureProvider.autoDispose<List<DateTime>>((
+  ref,
+) async {
+  final selectedModel = ref.watch(selectedModelProvider);
+  if (selectedModel == null) throw Exception('No model selected');
+  return await ApiService.fetchUnavailableDates(selectedModel['name']);
+});

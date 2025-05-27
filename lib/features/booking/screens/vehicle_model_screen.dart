@@ -1,3 +1,4 @@
+import 'package:car_rental/features/booking/screens/date_range_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../controllers/booking_controller.dart';
@@ -86,8 +87,8 @@ class VehicleModelScreen extends ConsumerWidget {
                             ? () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const Placeholder(),
-                              ), // Date Range
+                                builder: (_) => const DateRangeScreen(),
+                              ),
                             )
                             : null,
                     child: const Text('Next'),

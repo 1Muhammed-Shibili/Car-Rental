@@ -46,4 +46,17 @@ class ApiService {
       throw Exception('Failed to load vehicle models');
     }
   }
+
+  static Future<List<DateTime>> fetchUnavailableDates(String modelName) async {
+    final res = await http.get(
+      Uri.parse('$baseUrl/unavailable-dates?model=$modelName'),
+    );
+
+    if (res.statusCode == 200) {
+      final List data = json.decode(res.body);
+      return data.map((e) => DateTime.parse(e)).toList();
+    } else {
+      throw Exception('Failed to fetch unavailable dates');
+    }
+  }
 }
