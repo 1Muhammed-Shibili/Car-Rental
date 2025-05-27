@@ -1,62 +1,55 @@
 import 'dart:convert';
+import 'package:car_rental/models/vehicle_type.dart';
 import 'package:http/http.dart' as http;
+import 'package:car_rental/models/booking_date_model.dart';
+import 'package:car_rental/models/vehicle_detail_model.dart';
 
 class ApiService {
   static const String baseUrl =
-      'https://octalogic-test-frontend.vercel.app/api/v1/';
+      'https://octalogic-test-frontend.vercel.app/api/v1';
 
-  static Future<List<String>> fetchWheelOptions() async {
-    final res = await http.get(Uri.parse('$baseUrl/wheels'));
+  /// Fetch all vehicle types and their nested models
+  static Future<List<VehicleTypeModel>> fetchVehicleTypes() async {
+    final response = await http.get(Uri.parse('$baseUrl/vehicleTypes'));
 
-    if (res.statusCode == 200) {
-      final List data = json.decode(res.body);
-      return data.map((e) => e.toString()).toList();
-    } else {
-      throw Exception('Failed to load wheel options');
-    }
-  }
-
-  static Future<List<String>> fetchVehicleTypes() async {
-    final res = await http.get(Uri.parse('$baseUrl/vehicle-types'));
-
-    if (res.statusCode == 200) {
-      final List data = json.decode(res.body);
-      return data.map((e) => e.toString()).toList();
-    } else {
+    if (response.statusCode != 200) {
       throw Exception('Failed to load vehicle types');
     }
+
+    final List<dynamic> jsonList = jsonDecode(response.body);
+    return jsonList.map((json) => VehicleTypeModel.fromJson(json)).toList();
   }
 
-  static Future<List<Map<String, dynamic>>> fetchVehicleModels(
-    String type,
+  /// Fetch full vehicle details including image
+  static Future<VehicleDetailModel> fetchVehicleDetails(
+    String vehicleId,
   ) async {
-    final res = await http.get(Uri.parse('$baseUrl/vehicle-models?type=$type'));
+    final response = await http.get(Uri.parse('$baseUrl/vehicles/$vehicleId'));
 
-    if (res.statusCode == 200) {
-      final List data = json.decode(res.body);
-      return data
-          .map(
-            (e) => {
-              'name': e['name'],
-              'image': e['image'], // URL of the image
-            },
-          )
-          .toList();
-    } else {
-      throw Exception('Failed to load vehicle models');
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load vehicle details');
     }
+
+    final Map<String, dynamic> data = jsonDecode(response.body)['data'];
+    return VehicleDetailModel.fromJson(data);
   }
 
-  static Future<List<DateTime>> fetchUnavailableDates(String modelName) async {
-    final res = await http.get(
-      Uri.parse('$baseUrl/unavailable-dates?model=$modelName'),
-    );
+  /// Fetch unavailable date ranges for a vehicle
+  static Future<List<BookingDateModel>> fetchUnavailableDates(
+    String vehicleId,
+  ) async {
+    final response = await http.get(Uri.parse('$baseUrl/bookings/$vehicleId'));
 
-    if (res.statusCode == 200) {
-      final List data = json.decode(res.body);
-      return data.map((e) => DateTime.parse(e)).toList();
-    } else {
-      throw Exception('Failed to fetch unavailable dates');
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load bookings');
     }
+
+    final List<dynamic> jsonList = jsonDecode(response.body);
+    return jsonList.map((json) => BookingDateModel.fromJson(json)).toList();
   }
+
+  /// TODO: Implement POST booking once endpoint is available
+  // static Future<void> submitBooking(...) async {
+  //   // Implementation pending
+  // }
 }

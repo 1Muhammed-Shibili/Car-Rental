@@ -24,14 +24,15 @@ class WheelsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 for (final option in wheels)
-                  RadioListTile<String>(
+                  RadioListTile<int>(
                     title: Text('$option Wheels'),
                     value: option,
                     groupValue: selectedWheels,
-                    onChanged:
-                        (val) =>
-                            ref.read(selectedWheelsProvider.notifier).state =
-                                val,
+                    onChanged: (val) {
+                      if (val != null) {
+                        ref.read(selectedWheelsProvider.notifier).state = val;
+                      }
+                    },
                   ),
                 const SizedBox(height: 20),
                 ElevatedButton(

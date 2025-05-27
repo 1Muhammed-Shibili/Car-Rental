@@ -1,36 +1,69 @@
+import 'package:car_rental/models/booking_date_model.dart';
+import 'package:car_rental/models/vehicle_detail_model.dart';
+import 'package:car_rental/models/vehicle_model.dart';
+import 'package:car_rental/models/vehicle_type.dart';
 import 'package:car_rental/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final wheelsProvider = FutureProvider<List<String>>((ref) async {
-  return await ApiService.fetchWheelOptions();
+/// Selected number of wheels (e.g. 2, 3, 4)
+final wheelsProvider = Provider<AsyncValue<List<int>>>((ref) {
+  final vehicleTypesAsync = ref.watch(vehicleTypesProvider);
+
+  // Map the AsyncValue<List<VehicleTypeModel>> to AsyncValue<List<int>>
+  return vehicleTypesAsync.when(
+    data: (types) {
+      // Extract wheels from types and get unique values
+      final wheelsSet = types.map((type) => type.wheels).toSet();
+      final wheelsList = wheelsSet.toList()..sort();
+      return AsyncData(wheelsList);
+    },
+    loading: () => const AsyncLoading(),
+    error: (e, st) => AsyncError(e, st),
+  );
 });
+final selectedWheelsProvider = StateProvider<int?>((ref) => null);
 
-final selectedWheelsProvider = StateProvider<String?>((ref) => null);
-
-final vehicleTypesProvider = FutureProvider<List<String>>((ref) async {
+/// Fetch all vehicle types from API
+final vehicleTypesProvider = FutureProvider<List<VehicleTypeModel>>((
+  ref,
+) async {
   return await ApiService.fetchVehicleTypes();
 });
 
-final selectedVehicleTypeProvider = StateProvider<String?>((ref) => null);
-
-final selectedModelProvider = StateProvider<Map<String, dynamic>?>(
+/// User-selected vehicle type
+final selectedVehicleTypeProvider = StateProvider<VehicleTypeModel?>(
   (ref) => null,
 );
 
-final vehicleModelsProvider =
-    FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
-      final selectedType = ref.watch(selectedVehicleTypeProvider);
-      if (selectedType == null) throw Exception('Vehicle type not selected');
-      return await ApiService.fetchVehicleModels(selectedType);
-    });
+/// Extract vehicle models based on selected vehicle type
+final vehicleModelsProvider = Provider<List<VehicleModel>>((ref) {
+  final selectedType = ref.watch(selectedVehicleTypeProvider);
+  if (selectedType == null) return [];
+  return selectedType.vehicles;
+});
 
-final selectedDateRangeProvider = StateProvider<DateTimeRange?>((ref) => null);
+/// Selected vehicle model (basic info)
+final selectedVehicleModelProvider = StateProvider<VehicleModel?>(
+  (ref) => null,
+);
 
-final unavailableDatesProvider = FutureProvider.autoDispose<List<DateTime>>((
+/// Fetched full vehicle details (image, etc.)
+final vehicleDetailProvider = FutureProvider.autoDispose<VehicleDetailModel>((
   ref,
 ) async {
-  final selectedModel = ref.watch(selectedModelProvider);
-  if (selectedModel == null) throw Exception('No model selected');
-  return await ApiService.fetchUnavailableDates(selectedModel['name']);
+  final model = ref.watch(selectedVehicleModelProvider);
+  if (model == null) throw Exception("Model not selected");
+  return await ApiService.fetchVehicleDetails(model.id);
 });
+
+/// Selected rental date range
+final selectedDateRangeProvider = StateProvider<DateTimeRange?>((ref) => null);
+
+/// Unavailable date ranges for selected model
+final unavailableDatesProvider =
+    FutureProvider.autoDispose<List<BookingDateModel>>((ref) async {
+      final model = ref.watch(selectedVehicleModelProvider);
+      if (model == null) throw Exception("Model not selected");
+      return await ApiService.fetchUnavailableDates(model.id);
+    });

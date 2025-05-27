@@ -38,10 +38,10 @@ class DateRangeScreen extends ConsumerWidget {
                       if (picked != null) {
                         final rangeHasUnavailableDates = unavailable.any(
                           (u) =>
-                              u.isAfter(
+                              u.startDate.isAfter(
                                 picked.start.subtract(const Duration(days: 1)),
                               ) &&
-                              u.isBefore(
+                              u.endDate.isBefore(
                                 picked.end.add(const Duration(days: 1)),
                               ),
                         );

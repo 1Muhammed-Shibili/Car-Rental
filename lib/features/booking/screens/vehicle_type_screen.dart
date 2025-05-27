@@ -1,4 +1,5 @@
 import 'package:car_rental/features/booking/screens/vehicle_model_screen.dart';
+import 'package:car_rental/models/vehicle_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../controllers/booking_controller.dart';
@@ -24,15 +25,16 @@ class VehicleTypeScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 20),
                 for (final type in types)
-                  RadioListTile<String>(
-                    title: Text(type),
+                  RadioListTile<VehicleTypeModel>(
+                    title: Text(type.title ?? 'Unknown'),
                     value: type,
                     groupValue: selectedType,
-                    onChanged:
-                        (val) =>
-                            ref
-                                .read(selectedVehicleTypeProvider.notifier)
-                                .state = val,
+                    onChanged: (val) {
+                      if (val != null) {
+                        ref.read(selectedVehicleTypeProvider.notifier).state =
+                            val;
+                      }
+                    },
                   ),
                 const SizedBox(height: 20),
                 ElevatedButton(
