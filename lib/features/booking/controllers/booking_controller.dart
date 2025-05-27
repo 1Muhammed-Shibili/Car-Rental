@@ -12,3 +12,14 @@ final vehicleTypesProvider = FutureProvider<List<String>>((ref) async {
 });
 
 final selectedVehicleTypeProvider = StateProvider<String?>((ref) => null);
+
+final selectedModelProvider = StateProvider<Map<String, dynamic>?>(
+  (ref) => null,
+);
+
+final vehicleModelsProvider =
+    FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
+      final selectedType = ref.watch(selectedVehicleTypeProvider);
+      if (selectedType == null) throw Exception('Vehicle type not selected');
+      return await ApiService.fetchVehicleModels(selectedType);
+    });

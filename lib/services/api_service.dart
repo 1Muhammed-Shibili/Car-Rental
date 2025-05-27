@@ -26,4 +26,24 @@ class ApiService {
       throw Exception('Failed to load vehicle types');
     }
   }
+
+  static Future<List<Map<String, dynamic>>> fetchVehicleModels(
+    String type,
+  ) async {
+    final res = await http.get(Uri.parse('$baseUrl/vehicle-models?type=$type'));
+
+    if (res.statusCode == 200) {
+      final List data = json.decode(res.body);
+      return data
+          .map(
+            (e) => {
+              'name': e['name'],
+              'image': e['image'], // URL of the image
+            },
+          )
+          .toList();
+    } else {
+      throw Exception('Failed to load vehicle models');
+    }
+  }
 }

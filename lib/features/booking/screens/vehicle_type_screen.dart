@@ -1,3 +1,4 @@
+import 'package:car_rental/features/booking/screens/vehicle_model_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../controllers/booking_controller.dart';
@@ -40,8 +41,8 @@ class VehicleTypeScreen extends ConsumerWidget {
                           ? () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const Placeholder(),
-                            ), // next screen
+                              builder: (_) => const VehicleModelScreen(),
+                            ),
                           )
                           : null,
                   child: const Text('Next'),
