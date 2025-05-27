@@ -6,3 +6,9 @@ final wheelsProvider = FutureProvider<List<String>>((ref) async {
 });
 
 final selectedWheelsProvider = StateProvider<String?>((ref) => null);
+
+final vehicleTypesProvider = FutureProvider<List<String>>((ref) async {
+  return await ApiService.fetchVehicleTypes();
+});
+
+final selectedVehicleTypeProvider = StateProvider<String?>((ref) => null);
