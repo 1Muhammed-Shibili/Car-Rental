@@ -13,8 +13,6 @@ final wheelsProvider = FutureProvider<List<int>>((ref) async {
   return await ApiService.fetchWheelOptions();
 });
 
-// final selectedWheelsProvider = StateProvider<int?>((ref) => null);
-
 /// Fetch all vehicle types from API
 final vehicleTypesProvider = FutureProvider<List<VehicleTypeModel>>((
   ref,
@@ -85,7 +83,7 @@ class BookingNotifier extends StateNotifier<LocalBookingModel> {
   }
 
   Future<void> updateVehicleType(VehicleTypeModel type) async {
-    state = state.copyWith(vehicleType: type.id, vehicleTypeName: type.title);
+    state = state.copyWith(vehicleType: type.id, vehicleTypeName: type.type);
     await _persistData();
   }
 

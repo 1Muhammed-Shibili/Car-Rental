@@ -41,13 +41,13 @@ class SubmissionScreen extends ConsumerWidget {
                 const SizedBox(height: 8),
 
                 Text(
-                  'Vehicle Type: ${booking.vehicleModel ?? "-"}',
+                  'Vehicle Type: ${booking.vehicleTypeName ?? "-"}',
                   style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 8),
 
                 Text(
-                  'Vehicle Model: ${booking.vehicleModel ?? "-"}',
+                  'Vehicle Model: ${booking.vehicleModelName ?? "-"}',
                   style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 8),
