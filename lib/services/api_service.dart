@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:car_rental/models/local_booking_model.dart';
 import 'package:car_rental/models/vehicle_type.dart';
 import 'package:http/http.dart' as http;
 import 'package:car_rental/models/booking_date_model.dart';
@@ -17,7 +18,9 @@ class ApiService {
       throw Exception('Failed to load vehicle types');
     }
 
-    final List<dynamic> jsonList = jsonDecode(response.body);
+    final decoded = jsonDecode(response.body);
+    final List<dynamic> jsonList = decoded['data'];
+
     return jsonList.map((json) => VehicleTypeModel.fromJson(json)).toList();
   }
 
@@ -45,7 +48,9 @@ class ApiService {
       throw Exception('Failed to load bookings');
     }
 
-    final List<dynamic> jsonList = jsonDecode(response.body);
+    final decoded = jsonDecode(response.body);
+    final List<dynamic> jsonList = decoded['data'];
+
     return jsonList.map((json) => BookingDateModel.fromJson(json)).toList();
   }
 
@@ -57,11 +62,7 @@ class ApiService {
       final List<dynamic> list = decoded['data'];
 
       final wheels =
-          list // <-- Use 'list' here, not 'decoded'
-              .map((e) => e['wheels'])
-              .whereType<int>()
-              .toSet()
-              .toList()
+          list.map((e) => e['wheels']).whereType<int>().toSet().toList()
             ..sort();
 
       return wheels;
@@ -70,8 +71,17 @@ class ApiService {
     }
   }
 
-  /// TODO: Implement POST booking once endpoint is available
-  // static Future<void> submitBooking(...) async {
-  //   // Implementation pending
-  // }
+  static Future<void> submitBooking(LocalBookingModel booking) async {
+    final body = booking.toMap();
+
+    final response = await http.post(
+      Uri.parse('https://your-api-url.com/submit'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to submit booking: ${response.body}');
+    }
+  }
 }

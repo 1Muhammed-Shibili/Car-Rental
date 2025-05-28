@@ -8,7 +8,7 @@ import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Selected number of wheels (e.g. 2, 3, 4)
+/// Selected number of wheels
 final wheelsProvider = FutureProvider<List<int>>((ref) async {
   return await ApiService.fetchWheelOptions();
 });
@@ -81,6 +81,14 @@ class BookingNotifier extends StateNotifier<LocalBookingModel> {
 
   Future<void> updateWheels(int wheels) async {
     state = state.copyWith(wheels: wheels);
+    await _persistData();
+  } // In booking_controller.dart
+
+  Future<void> updateVehicleType(VehicleTypeModel type) async {
+    state = state.copyWith(
+      vehicleType: type.id, // Store type ID or full object based on your needs
+      vehicleTypeName: type.title,
+    );
     await _persistData();
   }
 

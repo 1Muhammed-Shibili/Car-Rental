@@ -4,6 +4,7 @@ class LocalBookingModel {
   final int? wheels;
   final String? vehicleType;
   final String? vehicleModel;
+  final String? vehicleTypeName;
   final DateTime? startDate;
   final DateTime? endDate;
 
@@ -13,6 +14,7 @@ class LocalBookingModel {
     this.wheels,
     this.vehicleType,
     this.vehicleModel,
+    this.vehicleTypeName,
     this.startDate,
     this.endDate,
   });
@@ -22,6 +24,7 @@ class LocalBookingModel {
     int? wheels,
     String? vehicleType,
     String? vehicleModel,
+    String? vehicleTypeName,
     DateTime? startDate,
     DateTime? endDate,
   }) {
@@ -31,6 +34,7 @@ class LocalBookingModel {
       wheels: wheels ?? this.wheels,
       vehicleType: vehicleType ?? this.vehicleType,
       vehicleModel: vehicleModel ?? this.vehicleModel,
+      vehicleTypeName: vehicleTypeName ?? this.vehicleTypeName,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
     );
@@ -43,6 +47,7 @@ class LocalBookingModel {
       'wheels': wheels,
       'vehicleType': vehicleType,
       'vehicleModel': vehicleModel,
+      'vehicleTypeName': vehicleTypeName,
       'startDate': startDate?.toIso8601String(),
       'endDate': endDate?.toIso8601String(),
     };
@@ -54,6 +59,7 @@ class LocalBookingModel {
       lastName: map['lastName'],
       wheels: map['wheels'],
       vehicleType: map['vehicleType'],
+      vehicleTypeName: map['vehicleTypeName'],
       vehicleModel: map['vehicleModel'],
       startDate: DateTime.tryParse(map['startDate'] ?? ''),
       endDate: DateTime.tryParse(map['endDate'] ?? ''),

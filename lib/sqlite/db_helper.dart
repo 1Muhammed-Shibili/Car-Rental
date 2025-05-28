@@ -28,6 +28,7 @@ class DBHelper {
         lastName TEXT,
         wheels INTEGER,
         vehicleType TEXT,
+        vehicleTypeName TEXT,
         vehicleModel TEXT,
         startDate TEXT,
         endDate TEXT
