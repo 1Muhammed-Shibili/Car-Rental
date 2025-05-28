@@ -30,6 +30,8 @@ class DBHelper {
         vehicleType TEXT,
         vehicleTypeName TEXT,
         vehicleModel TEXT,
+        vehicleModelName TEXT,
+        vehicleImageUrl TEXT,
         startDate TEXT,
         endDate TEXT
       )
@@ -38,12 +40,18 @@ class DBHelper {
 
   Future<void> saveBooking(LocalBookingModel model) async {
     final dbClient = await db;
+    final existing = await dbClient.query('bookings', limit: 1);
 
-    await dbClient.insert(
-      'bookings',
-      model.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    if (existing.isNotEmpty) {
+      await dbClient.update(
+        'bookings',
+        model.toMap(),
+        where: 'id = ?',
+        whereArgs: [existing.first['id']],
+      );
+    } else {
+      await dbClient.insert('bookings', model.toMap());
+    }
   }
 
   Future<LocalBookingModel?> getSavedBooking() async {
@@ -52,7 +60,7 @@ class DBHelper {
       'bookings',
       limit: 1,
     );
-
+    print('Fetched from DB: $maps');
     if (maps.isNotEmpty) {
       return LocalBookingModel.fromMap(maps.first);
     }

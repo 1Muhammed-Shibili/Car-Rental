@@ -82,18 +82,31 @@ class BookingNotifier extends StateNotifier<LocalBookingModel> {
   Future<void> updateWheels(int wheels) async {
     state = state.copyWith(wheels: wheels);
     await _persistData();
-  } // In booking_controller.dart
+  }
 
   Future<void> updateVehicleType(VehicleTypeModel type) async {
-    state = state.copyWith(
-      vehicleType: type.id, // Store type ID or full object based on your needs
-      vehicleTypeName: type.title,
-    );
+    state = state.copyWith(vehicleType: type.id, vehicleTypeName: type.title);
     await _persistData();
   }
 
   Future<void> _persistData() async {
-    await ref.read(dbHelperProvider).saveBooking(state);
+    final existing = await ref.read(dbHelperProvider).getSavedBooking();
+    final merged = existing?.copyWithFrom(state) ?? state;
+    await ref.read(dbHelperProvider).saveBooking(merged);
+  }
+
+  Future<void> updateVehicleModel(VehicleModel model) async {
+    state = state.copyWith(
+      vehicleModel: model.id,
+      vehicleModelName: model.name,
+      vehicleImageUrl: model.imageUrl,
+    );
+    await _persistData();
+  }
+
+  Future<void> updateRentalDateRange(DateTime start, DateTime end) async {
+    state = state.copyWith(startDate: start, endDate: end);
+    await _persistData();
   }
 }
 
@@ -101,3 +114,7 @@ final bookingProvider =
     StateNotifierProvider<BookingNotifier, LocalBookingModel>(
       (ref) => BookingNotifier(ref),
     );
+
+final bookingFromDbProvider = FutureProvider<LocalBookingModel?>((ref) async {
+  return await DBHelper().getSavedBooking();
+});

@@ -49,7 +49,11 @@ class VehicleModelScreen extends ConsumerWidget {
                             ref
                                 .read(selectedVehicleModelProvider.notifier)
                                 .state = model;
+                            ref
+                                .read(bookingProvider.notifier)
+                                .updateVehicleModel(model);
                           },
+
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),

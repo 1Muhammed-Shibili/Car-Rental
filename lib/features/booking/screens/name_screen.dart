@@ -1,5 +1,6 @@
 import 'package:car_rental/features/booking/controllers/booking_controller.dart';
 import 'package:car_rental/features/booking/screens/wheels_screen.dart';
+import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,14 +16,20 @@ class _NameScreenState extends ConsumerState<NameScreen> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
 
-  void _goNext() {
+  void _goNext() async {
     if (_formKey.currentState!.validate()) {
-      ref
-          .read(bookingProvider.notifier)
-          .updateName(_firstNameController.text, _lastNameController.text);
+      final model = ref.read(bookingProvider);
+      final updated = model.copyWith(
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+      );
+
+      ref.read(bookingProvider.notifier).state = updated;
+      await DBHelper().saveBooking(updated);
+
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => WheelsScreen()),
+        MaterialPageRoute(builder: (_) => const WheelsScreen()),
       );
     }
   }

@@ -1,3 +1,4 @@
+import 'package:car_rental/features/booking/screens/submission_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -38,12 +39,8 @@ class DateRangeScreen extends ConsumerWidget {
                       if (picked != null) {
                         final rangeHasUnavailableDates = unavailable.any(
                           (u) =>
-                              u.startDate.isAfter(
-                                picked.start.subtract(const Duration(days: 1)),
-                              ) &&
-                              u.endDate.isBefore(
-                                picked.end.add(const Duration(days: 1)),
-                              ),
+                              picked.start.isBefore(u.endDate) &&
+                              picked.end.isAfter(u.startDate),
                         );
 
                         if (rangeHasUnavailableDates) {
@@ -78,12 +75,20 @@ class DateRangeScreen extends ConsumerWidget {
                   ElevatedButton(
                     onPressed:
                         selectedRange != null
-                            ? () {
-                              // Proceed to final submission or confirmation
+                            ? () async {
+                              // Save selected rental date range in SQLite
+                              await ref
+                                  .read(bookingProvider.notifier)
+                                  .updateRentalDateRange(
+                                    selectedRange.start,
+                                    selectedRange.end,
+                                  );
+
+                              // Navigate to next screen (replace Placeholder with your actual screen)
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => const Placeholder(),
+                                  builder: (_) => const SubmissionScreen(),
                                 ),
                               );
                             }

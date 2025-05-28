@@ -44,6 +44,7 @@ class VehicleTypeScreen extends ConsumerWidget {
                     if (val != null) {
                       ref.read(selectedVehicleTypeProvider.notifier).state =
                           val;
+
                       ref.read(bookingProvider.notifier).updateVehicleType(val);
                     }
                   },
