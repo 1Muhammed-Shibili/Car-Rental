@@ -10,7 +10,6 @@ class ApiService {
   static const String baseUrl =
       'https://octalogic-test-frontend.vercel.app/api/v1';
 
-  /// Fetch all vehicle types and their nested models
   static Future<List<VehicleTypeModel>> fetchVehicleTypes() async {
     final response = await http.get(Uri.parse('$baseUrl/vehicleTypes'));
 

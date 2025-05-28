@@ -48,61 +48,76 @@ class VehicleModelScreen extends ConsumerWidget {
                         final VehicleModel model = models[i];
                         final bool isSelected = selectedModel?.id == model.id;
 
-                        return GestureDetector(
-                          onTap: () {
-                            ref
-                                .read(selectedVehicleModelProvider.notifier)
-                                .state = model;
-                            ref
-                                .read(bookingProvider.notifier)
-                                .updateVehicleModel(model);
-                          },
+                        return Consumer(
+                          builder: (context, ref, _) {
+                            final vehicleDetailAsync = ref.watch(
+                              vehicleDetailProvider(model.id),
+                            );
 
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: isSelected ? Colors.indigo : Colors.grey,
-                                width: isSelected ? 2.5 : 1,
-                              ),
-                              color:
-                                  isSelected
-                                      ? Colors.indigo.shade50
-                                      : Colors.grey.shade200,
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                model.imageUrl != null &&
-                                        model.imageUrl!.isNotEmpty
-                                    ? Image.network(
-                                      model.imageUrl!,
-                                      height: 100,
-                                      errorBuilder:
-                                          (_, __, ___) => const Icon(
-                                            Icons.image_not_supported,
-                                          ),
-                                    )
-                                    : const Icon(
-                                      Icons.image_not_supported,
-                                      size: 100,
-                                    ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  model.name,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
+                            return GestureDetector(
+                              onTap: () {
+                                ref
+                                    .read(selectedVehicleModelProvider.notifier)
+                                    .state = model;
+                                ref
+                                    .read(bookingProvider.notifier)
+                                    .updateVehicleModel(model);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
                                     color:
                                         isSelected
                                             ? Colors.indigo
-                                            : Colors.black,
+                                            : Colors.grey,
+                                    width: isSelected ? 2.5 : 1,
                                   ),
+                                  color:
+                                      isSelected
+                                          ? Colors.indigo.shade50
+                                          : Colors.grey.shade200,
                                 ),
-                              ],
-                            ),
-                          ),
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    vehicleDetailAsync.when(
+                                      data: (detailedModel) {
+                                        return Image.network(
+                                          detailedModel.imageUrl ?? '',
+                                          height: 136,
+                                          errorBuilder:
+                                              (_, __, ___) => const Icon(
+                                                Icons.image_not_supported,
+                                              ),
+                                        );
+                                      },
+                                      loading:
+                                          () =>
+                                              const CircularProgressIndicator(),
+                                      error:
+                                          (_, __) => const Icon(
+                                            Icons.image_not_supported,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      model.name,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color:
+                                            isSelected
+                                                ? Colors.indigo
+                                                : Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

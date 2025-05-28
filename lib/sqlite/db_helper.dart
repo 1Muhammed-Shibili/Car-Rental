@@ -60,7 +60,6 @@ class DBHelper {
       'bookings',
       limit: 1,
     );
-    print('Fetched from DB: $maps');
     if (maps.isNotEmpty) {
       return LocalBookingModel.fromMap(maps.first);
     }

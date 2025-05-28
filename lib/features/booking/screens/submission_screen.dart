@@ -1,7 +1,6 @@
 import 'package:car_rental/features/booking/controllers/booking_controller.dart';
 import 'package:car_rental/features/booking/widgets/custom_button.dart';
 import 'package:car_rental/features/booking/widgets/data_displaytile.dart';
-import 'package:car_rental/models/local_booking_model.dart';
 import 'package:car_rental/services/api_service.dart';
 import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
@@ -82,8 +81,7 @@ class SubmissionScreen extends ConsumerWidget {
                       try {
                         await ApiService.submitBooking(booking);
                         await DBHelper().clearBooking();
-                        ref.read(bookingProvider.notifier).state =
-                            LocalBookingModel();
+                        ref.read(bookingProvider.notifier).resetBooking();
 
                         if (context.mounted) {
                           await showDialog(

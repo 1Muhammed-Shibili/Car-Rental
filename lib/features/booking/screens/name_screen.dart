@@ -27,7 +27,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
         lastName: _lastNameController.text,
       );
 
-      ref.read(bookingProvider.notifier).state = updated;
+      ref.read(bookingProvider.notifier).updateBooking(updated);
       await DBHelper().saveBooking(updated);
 
       _firstNameController.clear();

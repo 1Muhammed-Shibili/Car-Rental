@@ -17,7 +17,7 @@ class FloatingIconAnimation extends ConsumerStatefulWidget {
   final bool showBackground;
 
   const FloatingIconAnimation({
-    Key? key,
+    super.key,
     this.icon, // Optional - if provided, uses this instead of provider
     this.size = 80.0,
     this.duration = const Duration(seconds: 2),
@@ -26,7 +26,7 @@ class FloatingIconAnimation extends ConsumerStatefulWidget {
     this.backgroundColor,
     this.backgroundSize,
     this.showBackground = true,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<FloatingIconAnimation> createState() =>
@@ -66,6 +66,7 @@ class _FloatingIconAnimationState extends ConsumerState<FloatingIconAnimation>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -94,7 +95,7 @@ class _FloatingIconAnimationState extends ConsumerState<FloatingIconAnimation>
                       boxShadow: [
                         BoxShadow(
                           color: (isDark ? Colors.black : Colors.grey)
-                              .withOpacity(0.2),
+                              .withValues(alpha: .2),
                           blurRadius: 15,
                           offset: const Offset(0, 5),
                         ),
@@ -141,7 +142,7 @@ class FloatingIconHelper {
 
 // Usage Examples Widget
 class FloatingIconExamples extends ConsumerWidget {
-  const FloatingIconExamples({Key? key}) : super(key: key);
+  const FloatingIconExamples({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -213,7 +214,7 @@ class FloatingIconExamples extends ConsumerWidget {
                                   color: (isDark
                                           ? darkLableColor
                                           : lightLableColor)
-                                      .withOpacity(0.3),
+                                      .withValues(alpha: .3),
                                 ),
                               ),
                               child: Column(
@@ -257,7 +258,7 @@ class FloatingIconExamples extends ConsumerWidget {
 
 // Example of how to use in different pages
 class HomePage extends ConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -288,7 +289,7 @@ class HomePage extends ConsumerWidget {
 }
 
 class CarPage extends ConsumerWidget {
-  const CarPage({Key? key}) : super(key: key);
+  const CarPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,6 +1,7 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:car_rental/models/booking_date_model.dart';
 import 'package:car_rental/models/local_booking_model.dart';
-import 'package:car_rental/models/vehicle_detail_model.dart';
 import 'package:car_rental/models/vehicle_model.dart';
 import 'package:car_rental/models/vehicle_type.dart';
 import 'package:car_rental/services/api_service.dart';
@@ -38,12 +39,22 @@ final selectedVehicleModelProvider = StateProvider<VehicleModel?>(
 );
 
 /// Fetched full vehicle details (image, etc.)
-final vehicleDetailProvider = FutureProvider.autoDispose<VehicleDetailModel>((
+final vehicleDetailProvider = FutureProvider.family<VehicleModel, String>((
   ref,
+  vehicleId,
 ) async {
-  final model = ref.watch(selectedVehicleModelProvider);
-  if (model == null) throw Exception("Model not selected");
-  return await ApiService.fetchVehicleDetails(model.id);
+  final response = await http.get(
+    Uri.parse(
+      'https://octalogic-test-frontend.vercel.app/api/v1/vehicles/$vehicleId',
+    ),
+  );
+
+  if (response.statusCode == 200) {
+    final jsonData = json.decode(response.body)['data'];
+    return VehicleModel.fromJson(jsonData);
+  } else {
+    throw Exception('Failed to load vehicle detail');
+  }
 });
 
 /// Selected rental date range
@@ -64,6 +75,13 @@ class BookingNotifier extends StateNotifier<LocalBookingModel> {
   final Ref ref;
 
   BookingNotifier(this.ref) : super(LocalBookingModel());
+  void updateBooking(LocalBookingModel updated) {
+    state = updated;
+  }
+
+  void resetBooking() {
+    state = LocalBookingModel();
+  }
 
   Future<void> loadSavedBooking() async {
     final saved = await ref.read(dbHelperProvider).getSavedBooking();

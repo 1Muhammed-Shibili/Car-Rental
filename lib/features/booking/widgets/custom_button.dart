@@ -12,9 +12,9 @@ class CustomButton {
 
       // Disabled Colors
       disabledBackgroundColor: (isDark ? darkLableColor : lightLableColor)
-          .withOpacity(0.3),
+          .withValues(alpha: .3),
       disabledForegroundColor: (isDark ? darkFontColor : lightFontColor)
-          .withOpacity(0.5),
+          .withValues(alpha: .5),
 
       // Elevation
       elevation: 2,
@@ -48,9 +48,9 @@ class CustomButton {
 
       // Disabled Colors
       disabledBackgroundColor: (isDark ? darkLableColor : lightLableColor)
-          .withOpacity(0.2),
+          .withValues(alpha: .2),
       disabledForegroundColor: (isDark ? darkFontColor : lightFontColor)
-          .withOpacity(0.5),
+          .withValues(alpha: .5),
 
       // Elevation
       elevation: 1,
@@ -85,7 +85,7 @@ class CustomButton {
       // Disabled Colors
       disabledBackgroundColor: Colors.transparent,
       disabledForegroundColor: (isDark ? darkLableColor : lightLableColor)
-          .withOpacity(0.5),
+          .withValues(alpha: .5),
 
       // Elevation
       elevation: 0,

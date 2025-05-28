@@ -23,8 +23,8 @@ var lightTheme = ThemeData(
   ),
   colorScheme: const ColorScheme.light(
     brightness: Brightness.light,
-    background: lightBgColor,
-    onBackground: lightFontColor,
+    surface: lightBgColor,
+    onSurface: lightFontColor,
     primaryContainer: lightDivColor,
     onPrimaryContainer: lightFontColor,
     secondaryContainer: lightLableColor,
@@ -97,8 +97,8 @@ var darkTheme = ThemeData(
   ),
   colorScheme: const ColorScheme.dark(
     brightness: Brightness.dark,
-    background: darkBgColor,
-    onBackground: darkFontColor,
+    surface: darkBgColor,
+    onSurface: darkFontColor,
     primaryContainer: darkDivColor,
     onPrimaryContainer: darkFontColor,
     secondaryContainer: darkLableColor,

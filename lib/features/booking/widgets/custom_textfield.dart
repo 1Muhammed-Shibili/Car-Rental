@@ -75,7 +75,9 @@ class CustomTextfield {
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
-          color: (isDark ? darkLableColor : lightLableColor).withOpacity(0.3),
+          color: (isDark ? darkLableColor : lightLableColor).withValues(
+            alpha: .3,
+          ),
           width: 1,
         ),
       ),
@@ -91,7 +93,9 @@ class CustomTextfield {
       hintStyle: TextStyle(
         fontFamily: "Poppins",
         fontSize: 14,
-        color: (isDark ? darkLableColor : lightLableColor).withOpacity(0.7),
+        color: (isDark ? darkLableColor : lightLableColor).withValues(
+          alpha: .7,
+        ),
         fontWeight: FontWeight.w400,
       ),
 
