@@ -1,5 +1,8 @@
 import 'package:car_rental/features/booking/screens/submission_screen.dart';
 import 'package:car_rental/features/booking/widgets/custom_button.dart';
+import 'package:car_rental/features/booking/widgets/custom_textfield.dart';
+import 'package:car_rental/features/booking/widgets/data_displaytile.dart';
+import 'package:car_rental/features/booking/widgets/icon_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -14,16 +17,30 @@ class DateRangeScreen extends ConsumerWidget {
     final unavailableAsync = ref.watch(unavailableDatesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Rental Dates'), centerTitle: true),
+      appBar: AppBar(
+        title: Text(
+          'Rental Dates',
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        centerTitle: true,
+      ),
       body: unavailableAsync.when(
         data:
             (unavailable) => Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  const Text(
+                  SizedBox(height: 40),
+                  FloatingIconAnimation(
+                    icon: Icons.calendar_month_outlined,
+                    size: 70,
+                    duration: Duration(seconds: 2),
+                    floatDistance: 15,
+                  ),
+                  SizedBox(height: 40),
+                  Text(
                     'Pick your rental period',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
@@ -65,36 +82,41 @@ class DateRangeScreen extends ConsumerWidget {
                   if (selectedRange != null)
                     Column(
                       children: [
-                        Text(
-                          'Start: ${DateFormat.yMMMd().format(selectedRange.start)}',
+                        DataDisplayTile(
+                          label: 'Start',
+                          value: DateFormat.yMMMd().format(selectedRange.start),
                         ),
-                        Text(
-                          'End: ${DateFormat.yMMMd().format(selectedRange.end)}',
+                        DataDisplayTile(
+                          label: 'End',
+                          value: DateFormat.yMMMd().format(selectedRange.end),
                         ),
                       ],
                     ),
                   const Spacer(),
-                  ElevatedButton(
-                    onPressed:
-                        selectedRange != null
-                            ? () async {
-                              await ref
-                                  .read(bookingProvider.notifier)
-                                  .updateRentalDateRange(
-                                    selectedRange.start,
-                                    selectedRange.end,
-                                  );
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed:
+                          selectedRange != null
+                              ? () async {
+                                await ref
+                                    .read(bookingProvider.notifier)
+                                    .updateRentalDateRange(
+                                      selectedRange.start,
+                                      selectedRange.end,
+                                    );
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const SubmissionScreen(),
-                                ),
-                              );
-                            }
-                            : null,
-                    style: CustomButton.getPrimaryStyle(context),
-                    child: const Text('Next'),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const SubmissionScreen(),
+                                  ),
+                                );
+                              }
+                              : null,
+                      style: CustomButton.getPrimaryStyle(context),
+                      child: const Text('Next'),
+                    ),
                   ),
                 ],
               ),

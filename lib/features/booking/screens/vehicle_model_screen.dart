@@ -14,20 +14,23 @@ class VehicleModelScreen extends ConsumerWidget {
     final selectedModel = ref.watch(selectedVehicleModelProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Choose Model'), centerTitle: true),
+      appBar: AppBar(
+        title: Text(
+          'Choose Model',
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        centerTitle: true,
+      ),
       body:
           models.isEmpty
               ? const Center(child: Text('No models available'))
               : Column(
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(16),
                     child: Text(
                       'Select a specific model',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                   Expanded(
@@ -59,16 +62,13 @@ class VehicleModelScreen extends ConsumerWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color:
-                                    isSelected
-                                        ? Colors.indigo
-                                        : Colors.grey.shade300,
+                                color: isSelected ? Colors.indigo : Colors.grey,
                                 width: isSelected ? 2.5 : 1,
                               ),
                               color:
                                   isSelected
                                       ? Colors.indigo.shade50
-                                      : Colors.white,
+                                      : Colors.grey.shade200,
                             ),
                             padding: const EdgeInsets.all(12),
                             child: Column(
@@ -109,20 +109,23 @@ class VehicleModelScreen extends ConsumerWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),
-                    child: ElevatedButton(
-                      onPressed:
-                          selectedModel != null
-                              ? () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const DateRangeScreen(),
-                                  ),
-                                );
-                              }
-                              : null,
-                      style: CustomButton.getPrimaryStyle(context),
-                      child: const Text('Next'),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed:
+                            selectedModel != null
+                                ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const DateRangeScreen(),
+                                    ),
+                                  );
+                                }
+                                : null,
+                        style: CustomButton.getPrimaryStyle(context),
+                        child: const Text('Next'),
+                      ),
                     ),
                   ),
                 ],

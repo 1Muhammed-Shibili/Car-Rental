@@ -1,5 +1,6 @@
 import 'package:car_rental/features/booking/controllers/booking_controller.dart';
 import 'package:car_rental/features/booking/widgets/custom_button.dart';
+import 'package:car_rental/features/booking/widgets/data_displaytile.dart';
 import 'package:car_rental/models/local_booking_model.dart';
 import 'package:car_rental/services/api_service.dart';
 import 'package:car_rental/sqlite/db_helper.dart';
@@ -14,7 +15,13 @@ class SubmissionScreen extends ConsumerWidget {
     final bookingAsync = ref.watch(bookingFromDbProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Review & Submit'), centerTitle: true),
+      appBar: AppBar(
+        title: Text(
+          'Review & Submit',
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        centerTitle: true,
+      ),
       body: bookingAsync.when(
         data: (booking) {
           if (booking == null) {
@@ -23,44 +30,49 @@ class SubmissionScreen extends ConsumerWidget {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'First Name: ${booking.firstName ?? "-"}',
-                  style: const TextStyle(fontSize: 18),
+                DataDisplayTile(
+                  label: 'First Name',
+                  value: booking.firstName ?? "-",
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Last Name: ${booking.lastName ?? "-"}',
-                  style: const TextStyle(fontSize: 18),
+                DataDisplayTile(
+                  label: 'Last Name',
+                  value: booking.lastName ?? "-",
                 ),
-                const SizedBox(height: 8),
-
-                Text(
-                  'Number of Wheels: ${booking.wheels?.toString() ?? "-"}',
-                  style: const TextStyle(fontSize: 18),
+                DataDisplayTile(
+                  label: 'Number of Wheels',
+                  value: booking.wheels?.toString() ?? "-",
                 ),
-                const SizedBox(height: 8),
-
-                Text(
-                  'Vehicle Type: ${booking.vehicleTypeName ?? "-"}',
-                  style: const TextStyle(fontSize: 18),
+                DataDisplayTile(
+                  label: 'Vehicle Type',
+                  value: booking.vehicleTypeName ?? "-",
                 ),
-                const SizedBox(height: 8),
-
-                Text(
-                  'Vehicle Model: ${booking.vehicleModelName ?? "-"}',
-                  style: const TextStyle(fontSize: 18),
+                DataDisplayTile(
+                  label: 'Vehicle Model',
+                  value: booking.vehicleModelName ?? "-",
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Rental Start Date: ${booking.startDate != null ? booking.startDate!.toLocal().toIso8601String().split("T").first : "-"}',
-                  style: const TextStyle(fontSize: 18),
+                DataDisplayTile(
+                  label: 'Rental Start Date',
+                  value:
+                      booking.startDate != null
+                          ? booking.startDate!
+                              .toLocal()
+                              .toIso8601String()
+                              .split("T")
+                              .first
+                          : "-",
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Rental End Date: ${booking.endDate != null ? booking.endDate!.toLocal().toIso8601String().split("T").first : "-"}',
-                  style: const TextStyle(fontSize: 18),
+                DataDisplayTile(
+                  label: 'Rental End Date',
+                  value:
+                      booking.endDate != null
+                          ? booking.endDate!
+                              .toLocal()
+                              .toIso8601String()
+                              .split("T")
+                              .first
+                          : "-",
                 ),
                 const Spacer(),
                 SizedBox(
