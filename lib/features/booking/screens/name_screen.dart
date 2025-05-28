@@ -90,7 +90,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
                       (value) =>
                           value!.isEmpty ? 'Please enter last name' : null,
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: _goNext,
                   style: CustomButton.getPrimaryStyle(context),

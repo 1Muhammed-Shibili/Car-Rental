@@ -86,19 +86,46 @@ class SubmissionScreen extends ConsumerWidget {
                             LocalBookingModel();
 
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Booking submitted successfully!'),
-                            ),
+                          await showDialog(
+                            context: context,
+                            builder:
+                                (context) => AlertDialog(
+                                  title: const Text('Success'),
+                                  content: const Text(
+                                    'Booking submitted successfully!',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(
+                                          context,
+                                        ).pop(); // Close dialog
+                                        Navigator.of(context).popUntil(
+                                          (route) => route.isFirst,
+                                        ); // Go to root
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
                           );
-                          Navigator.of(
-                            context,
-                          ).popUntil((route) => route.isFirst);
                         }
                       } catch (e) {
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Submission failed: $e')),
+                          await showDialog(
+                            context: context,
+                            builder:
+                                (context) => AlertDialog(
+                                  title: const Text('Submission Failed'),
+                                  content: Text('Submission failed: $e'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed:
+                                          () => Navigator.of(context).pop(),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
                           );
                         }
                       }
