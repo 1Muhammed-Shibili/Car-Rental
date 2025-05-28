@@ -1,4 +1,5 @@
 import 'package:car_rental/features/booking/screens/vehicle_model_screen.dart';
+import 'package:car_rental/features/booking/widgets/custom_button.dart';
 import 'package:car_rental/models/vehicle_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +15,7 @@ class VehicleTypeScreen extends ConsumerWidget {
     final selectedWheels = ref.watch(bookingProvider.select((b) => b.wheels));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Vehicle Type')),
+      appBar: AppBar(title: const Text('Vehicle Type'), centerTitle: true),
       body: vehicleTypesAsync.when(
         data: (types) {
           final filteredTypes =
@@ -60,6 +61,7 @@ class VehicleTypeScreen extends ConsumerWidget {
                           ),
                         )
                         : null,
+                style: CustomButton.getPrimaryStyle(context),
                 child: const Text('Next'),
               ),
             ],

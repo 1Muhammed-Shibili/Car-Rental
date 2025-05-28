@@ -1,4 +1,5 @@
 import 'package:car_rental/features/booking/screens/date_range_screen.dart';
+import 'package:car_rental/features/booking/widgets/custom_button.dart';
 import 'package:car_rental/models/vehicle_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +14,7 @@ class VehicleModelScreen extends ConsumerWidget {
     final selectedModel = ref.watch(selectedVehicleModelProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Choose Model')),
+      appBar: AppBar(title: const Text('Choose Model'), centerTitle: true),
       body:
           models.isEmpty
               ? const Center(child: Text('No models available'))
@@ -120,6 +121,7 @@ class VehicleModelScreen extends ConsumerWidget {
                                 );
                               }
                               : null,
+                      style: CustomButton.getPrimaryStyle(context),
                       child: const Text('Next'),
                     ),
                   ),

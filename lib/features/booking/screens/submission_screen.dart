@@ -1,4 +1,6 @@
 import 'package:car_rental/features/booking/controllers/booking_controller.dart';
+import 'package:car_rental/features/booking/widgets/custom_button.dart';
+import 'package:car_rental/models/local_booking_model.dart';
 import 'package:car_rental/services/api_service.dart';
 import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,7 @@ class SubmissionScreen extends ConsumerWidget {
     final bookingAsync = ref.watch(bookingFromDbProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Review & Submit')),
+      appBar: AppBar(title: const Text('Review & Submit'), centerTitle: true),
       body: bookingAsync.when(
         data: (booking) {
           if (booking == null) {
@@ -68,6 +70,8 @@ class SubmissionScreen extends ConsumerWidget {
                       try {
                         await ApiService.submitBooking(booking);
                         await DBHelper().clearBooking();
+                        ref.read(bookingProvider.notifier).state =
+                            LocalBookingModel();
 
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -87,6 +91,7 @@ class SubmissionScreen extends ConsumerWidget {
                         }
                       }
                     },
+                    style: CustomButton.getPrimaryStyle(context),
                     child: const Text('Submit'),
                   ),
                 ),

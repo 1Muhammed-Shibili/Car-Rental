@@ -1,4 +1,5 @@
 import 'package:car_rental/features/booking/screens/submission_screen.dart';
+import 'package:car_rental/features/booking/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +14,7 @@ class DateRangeScreen extends ConsumerWidget {
     final unavailableAsync = ref.watch(unavailableDatesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Rental Dates')),
+      appBar: AppBar(title: const Text('Rental Dates'), centerTitle: true),
       body: unavailableAsync.when(
         data:
             (unavailable) => Padding(
@@ -57,6 +58,7 @@ class DateRangeScreen extends ConsumerWidget {
                         }
                       }
                     },
+                    style: CustomButton.getPrimaryStyle(context),
                     child: const Text('Select Date Range'),
                   ),
                   const SizedBox(height: 30),
@@ -76,7 +78,6 @@ class DateRangeScreen extends ConsumerWidget {
                     onPressed:
                         selectedRange != null
                             ? () async {
-                              // Save selected rental date range in SQLite
                               await ref
                                   .read(bookingProvider.notifier)
                                   .updateRentalDateRange(
@@ -84,7 +85,6 @@ class DateRangeScreen extends ConsumerWidget {
                                     selectedRange.end,
                                   );
 
-                              // Navigate to next screen (replace Placeholder with your actual screen)
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -93,6 +93,7 @@ class DateRangeScreen extends ConsumerWidget {
                               );
                             }
                             : null,
+                    style: CustomButton.getPrimaryStyle(context),
                     child: const Text('Next'),
                   ),
                 ],

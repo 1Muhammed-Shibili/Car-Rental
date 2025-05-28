@@ -1,5 +1,7 @@
 import 'package:car_rental/features/booking/controllers/booking_controller.dart';
 import 'package:car_rental/features/booking/screens/wheels_screen.dart';
+import 'package:car_rental/features/booking/widgets/custom_button.dart';
+import 'package:car_rental/features/booking/widgets/custom_textfield.dart';
 import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,6 +29,9 @@ class _NameScreenState extends ConsumerState<NameScreen> {
       ref.read(bookingProvider.notifier).state = updated;
       await DBHelper().saveBooking(updated);
 
+      _firstNameController.clear();
+      _lastNameController.clear();
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => const WheelsScreen()),
@@ -37,35 +42,43 @@ class _NameScreenState extends ConsumerState<NameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Your Name')),
+      appBar: AppBar(title: const Text('Your Name'), centerTitle: true),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
+              SizedBox(height: 40),
               const Text(
                 'Enter your first and last name',
                 style: TextStyle(fontSize: 20),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               TextFormField(
                 controller: _firstNameController,
-                decoration: const InputDecoration(labelText: 'First Name'),
+                decoration: CustomTextfield.getDecoration(
+                  context: context,
+                  hintText: "First Name",
+                ),
                 validator:
                     (value) =>
                         value!.isEmpty ? 'Please enter first name' : null,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _lastNameController,
-                decoration: const InputDecoration(labelText: 'Last Name'),
+                decoration: CustomTextfield.getDecoration(
+                  context: context,
+                  hintText: "Last Name",
+                ),
                 validator:
                     (value) => value!.isEmpty ? 'Please enter last name' : null,
               ),
-              const Spacer(),
+              SizedBox(height: 40),
               ElevatedButton(
                 onPressed: _goNext,
+                style: CustomButton.getPrimaryStyle(context),
                 child: const Center(child: Text('Next')),
               ),
             ],
