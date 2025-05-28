@@ -1,6 +1,5 @@
 import 'package:car_rental/features/booking/screens/submission_screen.dart';
 import 'package:car_rental/features/booking/widgets/custom_button.dart';
-import 'package:car_rental/features/booking/widgets/custom_textfield.dart';
 import 'package:car_rental/features/booking/widgets/data_displaytile.dart';
 import 'package:car_rental/features/booking/widgets/icon_animation.dart';
 import 'package:flutter/material.dart';

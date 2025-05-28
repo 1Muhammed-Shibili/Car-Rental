@@ -90,7 +90,7 @@ class VehicleModelScreen extends ConsumerWidget {
                                     ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  model.name ?? 'Unknown',
+                                  model.name,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
