@@ -16,6 +16,25 @@ class LocalBookingModel {
     this.startDate,
     this.endDate,
   });
+  LocalBookingModel copyWith({
+    String? firstName,
+    String? lastName,
+    int? wheels,
+    String? vehicleType,
+    String? vehicleModel,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) {
+    return LocalBookingModel(
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      wheels: wheels ?? this.wheels,
+      vehicleType: vehicleType ?? this.vehicleType,
+      vehicleModel: vehicleModel ?? this.vehicleModel,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {

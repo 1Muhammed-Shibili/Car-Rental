@@ -1,3 +1,5 @@
+import 'package:car_rental/features/booking/controllers/booking_controller.dart';
+import 'package:car_rental/features/booking/screens/wheels_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,8 +17,13 @@ class _NameScreenState extends ConsumerState<NameScreen> {
 
   void _goNext() {
     if (_formKey.currentState!.validate()) {
-      // Store data using Riverpod provider
-      // Navigate to next screen
+      ref
+          .read(bookingProvider.notifier)
+          .updateName(_firstNameController.text, _lastNameController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WheelsScreen()),
+      );
     }
   }
 

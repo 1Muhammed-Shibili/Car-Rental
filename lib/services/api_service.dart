@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:car_rental/models/vehicle_type.dart';
 import 'package:http/http.dart' as http;
 import 'package:car_rental/models/booking_date_model.dart';
+
 import 'package:car_rental/models/vehicle_detail_model.dart';
 
 class ApiService {

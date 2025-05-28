@@ -1,8 +1,10 @@
 import 'package:car_rental/models/booking_date_model.dart';
+import 'package:car_rental/models/local_booking_model.dart';
 import 'package:car_rental/models/vehicle_detail_model.dart';
 import 'package:car_rental/models/vehicle_model.dart';
 import 'package:car_rental/models/vehicle_type.dart';
 import 'package:car_rental/services/api_service.dart';
+import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -67,3 +69,33 @@ final unavailableDatesProvider =
       if (model == null) throw Exception("Model not selected");
       return await ApiService.fetchUnavailableDates(model.id);
     });
+
+/// Booking form data
+final dbHelperProvider = Provider<DBHelper>((ref) => DBHelper());
+
+class BookingNotifier extends StateNotifier<LocalBookingModel> {
+  final Ref ref;
+
+  BookingNotifier(this.ref) : super(LocalBookingModel());
+
+  Future<void> loadSavedBooking() async {
+    final saved = await ref.read(dbHelperProvider).getSavedBooking();
+    if (saved != null) {
+      state = saved;
+    }
+  }
+
+  Future<void> updateName(String firstName, String lastName) async {
+    state = state.copyWith(firstName: firstName, lastName: lastName);
+    await _persistData();
+  }
+
+  Future<void> _persistData() async {
+    await ref.read(dbHelperProvider).saveBooking(state);
+  }
+}
+
+final bookingProvider =
+    StateNotifierProvider<BookingNotifier, LocalBookingModel>(
+      (ref) => BookingNotifier(ref),
+    );
