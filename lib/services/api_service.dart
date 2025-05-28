@@ -49,6 +49,27 @@ class ApiService {
     return jsonList.map((json) => BookingDateModel.fromJson(json)).toList();
   }
 
+  static Future<List<int>> fetchWheelOptions() async {
+    final response = await http.get(Uri.parse('$baseUrl/vehicleTypes'));
+
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+      final List<dynamic> list = decoded['data'];
+
+      final wheels =
+          list // <-- Use 'list' here, not 'decoded'
+              .map((e) => e['wheels'])
+              .whereType<int>()
+              .toSet()
+              .toList()
+            ..sort();
+
+      return wheels;
+    } else {
+      throw Exception('Failed to fetch wheel options');
+    }
+  }
+
   /// TODO: Implement POST booking once endpoint is available
   // static Future<void> submitBooking(...) async {
   //   // Implementation pending

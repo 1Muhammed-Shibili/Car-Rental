@@ -9,7 +9,7 @@ class WheelsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final wheelsAsync = ref.watch(wheelsProvider);
-    final selectedWheels = ref.watch(selectedWheelsProvider);
+    final selectedWheels = ref.watch(bookingProvider.select((b) => b.wheels));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Number of Wheels')),
@@ -30,7 +30,7 @@ class WheelsScreen extends ConsumerWidget {
                     groupValue: selectedWheels,
                     onChanged: (val) {
                       if (val != null) {
-                        ref.read(selectedWheelsProvider.notifier).state = val;
+                        ref.read(bookingProvider.notifier).updateWheels(val);
                       }
                     },
                   ),

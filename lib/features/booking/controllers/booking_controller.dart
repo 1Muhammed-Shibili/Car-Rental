@@ -9,22 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Selected number of wheels (e.g. 2, 3, 4)
-final wheelsProvider = Provider<AsyncValue<List<int>>>((ref) {
-  final vehicleTypesAsync = ref.watch(vehicleTypesProvider);
-
-  // Map the AsyncValue<List<VehicleTypeModel>> to AsyncValue<List<int>>
-  return vehicleTypesAsync.when(
-    data: (types) {
-      // Extract wheels from types and get unique values
-      final wheelsSet = types.map((type) => type.wheels).toSet();
-      final wheelsList = wheelsSet.toList()..sort();
-      return AsyncData(wheelsList);
-    },
-    loading: () => const AsyncLoading(),
-    error: (e, st) => AsyncError(e, st),
-  );
+final wheelsProvider = FutureProvider<List<int>>((ref) async {
+  return await ApiService.fetchWheelOptions();
 });
-final selectedWheelsProvider = StateProvider<int?>((ref) => null);
+
+// final selectedWheelsProvider = StateProvider<int?>((ref) => null);
 
 /// Fetch all vehicle types from API
 final vehicleTypesProvider = FutureProvider<List<VehicleTypeModel>>((
@@ -87,6 +76,11 @@ class BookingNotifier extends StateNotifier<LocalBookingModel> {
 
   Future<void> updateName(String firstName, String lastName) async {
     state = state.copyWith(firstName: firstName, lastName: lastName);
+    await _persistData();
+  }
+
+  Future<void> updateWheels(int wheels) async {
+    state = state.copyWith(wheels: wheels);
     await _persistData();
   }
 
