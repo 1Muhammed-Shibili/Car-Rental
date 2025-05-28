@@ -1,5 +1,5 @@
 import 'package:car_rental/config/theme.dart';
-import 'package:car_rental/features/booking/screens/name_screen.dart';
+import 'package:car_rental/features/booking/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: const NameScreen(),
+      home: const SplashScreen(),
     );
   }
 }

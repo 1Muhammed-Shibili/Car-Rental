@@ -75,9 +75,12 @@ class _NameScreenState extends ConsumerState<NameScreen> {
                     context: context,
                     hintText: "First Name",
                   ),
-                  validator:
-                      (value) =>
-                          value!.isEmpty ? 'Please enter first name' : null,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter first name';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -86,9 +89,12 @@ class _NameScreenState extends ConsumerState<NameScreen> {
                     context: context,
                     hintText: "Last Name",
                   ),
-                  validator:
-                      (value) =>
-                          value!.isEmpty ? 'Please enter last name' : null,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter Last name';
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(height: 50),
                 ElevatedButton(
