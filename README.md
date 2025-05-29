@@ -43,6 +43,13 @@ sqflite: ^2.4.2
 path_provider: ^2.1.5
 path: ^1.9.1
 
+```yaml
+PLease ensure you have ndkVersion = "27.0.12077973"
+Also please only use the app with an internet connection
+
+```
+
+
 
 🚀 Getting Started
 Follow these steps to set up and run the project locally:
