@@ -6,6 +6,7 @@ import 'package:car_rental/features/booking/widgets/icon_animation.dart';
 import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class NameScreen extends ConsumerStatefulWidget {
   const NameScreen({super.key});
@@ -33,10 +34,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
       _firstNameController.clear();
       _lastNameController.clear();
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const WheelsScreen()),
-      );
+      context.push('/wheels');
     }
   }
 

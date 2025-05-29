@@ -5,6 +5,7 @@ import 'package:car_rental/services/api_service.dart';
 import 'package:car_rental/sqlite/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SubmissionScreen extends ConsumerWidget {
   const SubmissionScreen({super.key});
@@ -96,9 +97,7 @@ class SubmissionScreen extends ConsumerWidget {
                                     TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
-                                        Navigator.of(
-                                          context,
-                                        ).popUntil((route) => route.isFirst);
+                                        context.go('/name');
                                       },
                                       child: const Text('OK'),
                                     ),

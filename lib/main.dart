@@ -1,5 +1,5 @@
+import 'package:car_rental/config/router.dart';
 import 'package:car_rental/config/theme.dart';
-import 'package:car_rental/features/booking/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Car Rental',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: const SplashScreen(),
+      routerConfig: router,
     );
   }
 }

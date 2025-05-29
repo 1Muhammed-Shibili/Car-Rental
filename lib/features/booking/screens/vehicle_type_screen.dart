@@ -4,6 +4,7 @@ import 'package:car_rental/features/booking/widgets/icon_animation.dart';
 import 'package:car_rental/models/vehicle_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../controllers/booking_controller.dart';
 
 class VehicleTypeScreen extends ConsumerWidget {
@@ -68,14 +69,7 @@ class VehicleTypeScreen extends ConsumerWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed:
-                    selectedType != null
-                        ? () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const VehicleModelScreen(),
-                          ),
-                        )
-                        : null,
+                    selectedType != null ? () => context.push('/model') : null,
                 style: CustomButton.getPrimaryStyle(context),
                 child: const Text('Next'),
               ),

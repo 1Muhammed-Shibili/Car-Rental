@@ -3,6 +3,7 @@ import 'package:car_rental/features/booking/widgets/custom_button.dart';
 import 'package:car_rental/models/vehicle_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../controllers/booking_controller.dart';
 
 class VehicleModelScreen extends ConsumerWidget {
@@ -130,12 +131,7 @@ class VehicleModelScreen extends ConsumerWidget {
                         onPressed:
                             selectedModel != null
                                 ? () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const DateRangeScreen(),
-                                    ),
-                                  );
+                                  context.push('/dates');
                                 }
                                 : null,
                         style: CustomButton.getPrimaryStyle(context),

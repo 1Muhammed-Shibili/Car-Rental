@@ -1,6 +1,7 @@
 import 'package:car_rental/features/booking/screens/name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 final splashTextProvider = StateProvider<String>((ref) => "Car Rental");
 
@@ -28,9 +29,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        Navigator.of(
-          context,
-        ).pushReplacement(MaterialPageRoute(builder: (_) => NameScreen()));
+        context.go('/name');
       }
     });
   }

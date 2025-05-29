@@ -44,7 +44,10 @@ dependencies:
   # Api
   http: ^1.4.0
 
-  
+  # Navigation
+  go_router: ^15.1.2
+
+  # Date formatting
   intl: ^0.20.2
 
   # Database
