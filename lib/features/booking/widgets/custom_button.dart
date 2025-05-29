@@ -6,26 +6,20 @@ class CustomButton {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ElevatedButton.styleFrom(
-      // Background Color
       backgroundColor: isDark ? darkPrimaryColor : lightPrimaryColor,
       foregroundColor: isDark ? darkBgColor : lightBgColor,
 
-      // Disabled Colors
       disabledBackgroundColor: (isDark ? darkLableColor : lightLableColor)
           .withValues(alpha: .3),
       disabledForegroundColor: (isDark ? darkFontColor : lightFontColor)
           .withValues(alpha: .5),
 
-      // Elevation
       elevation: 2,
 
-      // Shape
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
 
-      // Padding
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
 
-      // Text Style
       textStyle: const TextStyle(
         fontFamily: "Poppins",
         fontSize: 16,
@@ -33,7 +27,6 @@ class CustomButton {
         letterSpacing: 0.5,
       ),
 
-      // Animation Duration
       animationDuration: const Duration(milliseconds: 200),
     );
   }
@@ -42,26 +35,20 @@ class CustomButton {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ElevatedButton.styleFrom(
-      // Background Color
       backgroundColor: isDark ? darkDivColor : lightDivColor,
       foregroundColor: isDark ? darkFontColor : lightFontColor,
 
-      // Disabled Colors
       disabledBackgroundColor: (isDark ? darkLableColor : lightLableColor)
           .withValues(alpha: .2),
       disabledForegroundColor: (isDark ? darkFontColor : lightFontColor)
           .withValues(alpha: .5),
 
-      // Elevation
       elevation: 1,
 
-      // Shape
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
 
-      // Padding
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
 
-      // Text Style
       textStyle: const TextStyle(
         fontFamily: "Poppins",
         fontSize: 16,
@@ -69,7 +56,6 @@ class CustomButton {
         letterSpacing: 0.3,
       ),
 
-      // Animation Duration
       animationDuration: const Duration(milliseconds: 200),
     );
   }
@@ -78,19 +64,15 @@ class CustomButton {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ElevatedButton.styleFrom(
-      // Background Color
       backgroundColor: Colors.transparent,
       foregroundColor: isDark ? darkPrimaryColor : lightPrimaryColor,
 
-      // Disabled Colors
       disabledBackgroundColor: Colors.transparent,
       disabledForegroundColor: (isDark ? darkLableColor : lightLableColor)
           .withValues(alpha: .5),
 
-      // Elevation
       elevation: 0,
 
-      // Shape with Border
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
@@ -99,10 +81,8 @@ class CustomButton {
         ),
       ),
 
-      // Padding
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
 
-      // Text Style
       textStyle: const TextStyle(
         fontFamily: "Poppins",
         fontSize: 16,
@@ -110,7 +90,6 @@ class CustomButton {
         letterSpacing: 0.5,
       ),
 
-      // Animation Duration
       animationDuration: const Duration(milliseconds: 200),
     );
   }

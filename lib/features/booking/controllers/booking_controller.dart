@@ -38,7 +38,7 @@ final selectedVehicleModelProvider = StateProvider<VehicleModel?>(
   (ref) => null,
 );
 
-/// Fetched full vehicle details (image, etc.)
+/// Fetched  vehicle details (image)
 final vehicleDetailProvider = FutureProvider.family<VehicleModel, String>((
   ref,
   vehicleId,

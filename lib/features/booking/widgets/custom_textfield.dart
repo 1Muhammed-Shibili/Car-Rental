@@ -19,7 +19,6 @@ class CustomTextfield {
       filled: true,
       fillColor: isDark ? darkBgColor : lightBgColor,
 
-      // Prefix Icon
       prefixIcon:
           prefixIcon != null
               ? Icon(
@@ -29,7 +28,6 @@ class CustomTextfield {
               )
               : null,
 
-      // Suffix Icon
       suffixIcon:
           suffixIcon != null
               ? IconButton(
@@ -42,10 +40,8 @@ class CustomTextfield {
               )
               : null,
 
-      // Content Padding
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
 
-      // Border Styles
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
@@ -82,7 +78,6 @@ class CustomTextfield {
         ),
       ),
 
-      // Text Styles
       labelStyle: TextStyle(
         fontFamily: "Poppins",
         fontSize: 14,

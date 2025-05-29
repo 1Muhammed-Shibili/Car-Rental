@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:car_rental/config/colors.dart';
 
-// Riverpod Provider for managing the current icon
 final floatingIconProvider = StateProvider<IconData>((ref) => Icons.car_rental);
 
-// Custom Floating Icon Animation Widget
 class FloatingIconAnimation extends ConsumerStatefulWidget {
-  final IconData? icon; // Direct icon prop - takes priority over provider
+  final IconData? icon;
   final double size;
   final Duration duration;
   final double floatDistance;
@@ -18,7 +16,7 @@ class FloatingIconAnimation extends ConsumerStatefulWidget {
 
   const FloatingIconAnimation({
     super.key,
-    this.icon, // Optional - if provided, uses this instead of provider
+    this.icon,
     this.size = 80.0,
     this.duration = const Duration(seconds: 2),
     this.floatDistance = 20.0,
@@ -42,13 +40,11 @@ class _FloatingIconAnimationState extends ConsumerState<FloatingIconAnimation>
   void initState() {
     super.initState();
 
-    // Initialize animation controller
     _animationController = AnimationController(
       duration: widget.duration,
       vsync: this,
     );
 
-    // Create floating animation (up and down)
     _floatAnimation = Tween<double>(
       begin: -widget.floatDistance / 2,
       end: widget.floatDistance / 2,
@@ -56,7 +52,6 @@ class _FloatingIconAnimationState extends ConsumerState<FloatingIconAnimation>
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
-    // Start the animation and repeat
     _animationController.repeat(reverse: true);
   }
 
@@ -70,10 +65,8 @@ class _FloatingIconAnimationState extends ConsumerState<FloatingIconAnimation>
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Use direct icon prop if provided, otherwise use provider
     final currentIcon = widget.icon ?? ref.watch(floatingIconProvider);
 
-    // Determine colors based on theme
     final iconColor =
         widget.iconColor ?? (isDark ? darkPrimaryColor : lightPrimaryColor);
     final bgColor =
@@ -112,14 +105,11 @@ class _FloatingIconAnimationState extends ConsumerState<FloatingIconAnimation>
   }
 }
 
-// Helper class for easy icon management
 class FloatingIconHelper {
-  // Method to change icon from any page
   static void changeIcon(WidgetRef ref, IconData newIcon) {
     ref.read(floatingIconProvider.notifier).state = newIcon;
   }
 
-  // Predefined icon sets for different pages
   static const Map<String, IconData> pageIcons = {
     'home': Icons.home_rounded,
     'car': Icons.directions_car_rounded,
@@ -133,14 +123,12 @@ class FloatingIconHelper {
     'notification': Icons.notifications_rounded,
   };
 
-  // Method to set icon by page name
   static void setIconForPage(WidgetRef ref, String pageName) {
     final icon = pageIcons[pageName] ?? Icons.help_rounded;
     changeIcon(ref, icon);
   }
 }
 
-// Usage Examples Widget
 class FloatingIconExamples extends ConsumerWidget {
   const FloatingIconExamples({super.key});
 
@@ -163,7 +151,6 @@ class FloatingIconExamples extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          // Main floating animation
           const Expanded(
             flex: 2,
             child: Center(
@@ -174,8 +161,6 @@ class FloatingIconExamples extends ConsumerWidget {
               ),
             ),
           ),
-
-          // Control buttons
           Expanded(
             flex: 1,
             child: Padding(
@@ -192,8 +177,6 @@ class FloatingIconExamples extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-                  // Icon selection buttons
                   Wrap(
                     spacing: 10,
                     runSpacing: 10,
@@ -251,70 +234,6 @@ class FloatingIconExamples extends ConsumerWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// Example of how to use in different pages
-class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Set icon for this page when widget builds
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FloatingIconHelper.setIconForPage(ref, 'home');
-    });
-
-    return Scaffold(
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Home Page'),
-            SizedBox(height: 50),
-
-            // Small floating icon
-            FloatingIconAnimation(
-              size: 60,
-              duration: Duration(seconds: 3),
-              floatDistance: 15,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CarPage extends ConsumerWidget {
-  const CarPage({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Set car icon for this page
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FloatingIconHelper.setIconForPage(ref, 'car');
-    });
-
-    return Scaffold(
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Car Rental Page'),
-            SizedBox(height: 50),
-
-            // Custom styled floating icon
-            FloatingIconAnimation(
-              size: 80,
-              duration: Duration(milliseconds: 2000),
-              floatDistance: 20,
-              showBackground: true,
-            ),
-          ],
-        ),
       ),
     );
   }

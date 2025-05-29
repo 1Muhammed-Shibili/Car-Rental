@@ -95,12 +95,10 @@ class SubmissionScreen extends ConsumerWidget {
                                   actions: [
                                     TextButton(
                                       onPressed: () {
+                                        Navigator.of(context).pop();
                                         Navigator.of(
                                           context,
-                                        ).pop(); // Close dialog
-                                        Navigator.of(context).popUntil(
-                                          (route) => route.isFirst,
-                                        ); // Go to root
+                                        ).popUntil((route) => route.isFirst);
                                       },
                                       child: const Text('OK'),
                                     ),

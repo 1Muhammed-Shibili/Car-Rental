@@ -23,7 +23,7 @@ class ApiService {
     return jsonList.map((json) => VehicleTypeModel.fromJson(json)).toList();
   }
 
-  /// Fetch full vehicle details including image
+  /// Fetch full vehicle details
   static Future<VehicleDetailModel> fetchVehicleDetails(
     String vehicleId,
   ) async {
@@ -70,6 +70,8 @@ class ApiService {
     }
   }
 
+  /// Submit  booking to API
+  ///API not available, so this is a mock implementation
   static Future<void> submitBooking(LocalBookingModel booking) async {
     final body = booking.toMap();
 
