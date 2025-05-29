@@ -5,7 +5,7 @@ A Flutter-based vehicle booking application that allows users to select a vehicl
 ---
 
 ## 📁 Project Structure
-
+```yaml
 lib/
 ├── config/ # App-wide configuration (themes, constants, etc.)
 ├── features/
@@ -18,14 +18,14 @@ lib/
 ├── sqlte/ # SQLite helpers and database models
 └── main.dart # App entry point
 
-
+```
 ---
 
 ## 🧰 Dependencies
 
 Below are the main packages used in this project:
 
-```yaml
+
 cupertino_icons: ^1.0.8
 flutter_launcher_icons: ^0.14.3
 
