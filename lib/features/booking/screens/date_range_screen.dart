@@ -1,3 +1,4 @@
+import 'package:car_rental/config/theme.dart';
 import 'package:car_rental/features/booking/widgets/custom_button.dart';
 import 'package:car_rental/features/booking/widgets/data_displaytile.dart';
 import 'package:car_rental/features/booking/widgets/icon_animation.dart';
@@ -49,7 +50,7 @@ class DateRangeScreen extends ConsumerWidget {
                         firstDate: DateTime.now(),
                         lastDate: DateTime.now().add(const Duration(days: 60)),
                         builder: (context, child) {
-                          return Theme(data: ThemeData.light(), child: child!);
+                          return child!;
                         },
                       );
 
